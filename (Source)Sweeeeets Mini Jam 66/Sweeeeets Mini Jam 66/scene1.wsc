@@ -1,0 +1,1232 @@
+{
+	"sceneObjects": [
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": true,
+					"image": "CookiePlayer.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": false,
+					"name": "",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 35,
+						"y": 35
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Player",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {},
+			"functions": {
+				"onKeyPress": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar controles=\n\t{\n\t    left: \"left\",\n\t    right: \"right\",\n\t};\n\tif(wade.isKeyDown(controles.right))\n\t{\n\t    this.setRotation(this.getRotation() + 0.03);\n\t}\n\tif(wade.isKeyDown(controles.left))\n\t{\n\t    this.setRotation(this.getRotation() - 0.03);\n\t}\n\tthis.x = this.getPosition().x;\n\tthis.y = this.getPosition().y;\n\tthis.speed = 120;\n\tif(wade.isKeyDown(controles.right)&&\n\t(wade.isKeyDown(controles.left)))\n\t{\n\t    \n\t    this.speed = 0;\n\t    this.setRotation(this.getRotation());\n\t}\n\tthis.angle = this.getRotation();\n\tthis.x += 100000 * Math.sin(this.angle);\n\tthis.y -= 100000 * Math.cos(this.angle);\n\tthis.moveTo(this.x, this.y, this.speed);\n\tthis.getSprite().setSize(this.widthhight, \n\tthis.widthhight)\n\tif(this.getSprite().isOnScreen() === false){\n\twade.preloadAudio('data/Death.wav', true);\n\twade.removeSceneObject(this)\n\twade.getObjectByName(\"Score\").over = true;\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tvar stupidname = wade.getObjectByName(\"Score\").time;\n\tif (highstupidname < stupidname)\n\t{\n\twade.storeLocalObject(\"lastscore\", stupidname);\n\t}\n\t}\n}",
+				"Shoot": "function (data)\n{\n\tvar bObj = this.bulletObj.clone(this.getPosition().x, \n\tthis.getPosition().y)\n\tbObj.setRotation(this.getRotation())\n\twade.addSceneObject(bObj)\n\tthis.schedule(1500,\"Shoot\");\n\tthis.schedule(0,\"Shrink\");\n}",
+				"onAddToScene": "function (data)\n{\n\t// wade.storeLocalObject(\"lastscore\", 0);\n\tthis.schedule(1500,\"Shoot\");\n\tthis.schedule(0,\"Grow\");\n\tthis.bulletObj = wade.getObjectByName(\"Bullet\");\n\tthis.widthhight = 35;\n\tvar skin = wade.retrieveLocalObject(\"playerSkin\");\n\twade.loadImage(skin)\n\tthis.getSprite().setImageFile(skin)\n\tconsole.log(skin)\n}",
+				"Grow": "function (data)\n{\n\tthis.widthhight += 1;\n\tif (this.widthhight < 50)\n\tthis.schedule(50,\"Grow\");\n}",
+				"Shrink": "function (data)\n{\n\tthis.widthhight -= 1;\n\tif (this.widthhight > 35)\n\tthis.schedule(50,\"Shrink\");\n\telse\n\tthis.schedule(0,\"Grow\");\n}",
+				"onRemoveFromScene": "function (data)\n{\n\t\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0.8569079150261754,
+				"y": -22.136513705706736
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": false,
+					"image": "",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": true,
+					"name": "",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {}
+				},
+				{
+					"type": "TextSprite",
+					"text": "O",
+					"name": "",
+					"font": "11px Arial",
+					"alignment": "center",
+					"color": "#000",
+					"visible": true,
+					"layer": 1,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#4f210e",
+					"outlineWidth": 8,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				},
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Bullet",
+			"isTemplate": true,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\tthis.x = wade.getObjectByName(\"Player\").x;\n\tthis.y = wade.getObjectByName(\"Player\").y;\n\tthis.speed = 500;\n\tthis.eSpawn = wade.getObjectByName(\"EnemySpawn\")\n\tthis.moveTo(this.x, this.y, this.speed);\n}",
+				"onOverlap": "function (data)\n{\n\tif(data.otherObject.getSprite().getName() == \"Enemy\")\n\t{\n\twade.loadAudio('data/EnemyHurt.wav', true);\n\twade.removeSceneObject(data.otherObject)\n\twade.getObjectByName(\"Score\").time += 10;\n\tthis.eSpawn.enemyNumber -= 1;\n\tvar enemyscore = wade.retrieveLocalObject(\"enemyscore\");\n\tenemyscore += 1;\n\twade.storeLocalObject(\"enemyscore\", enemyscore);\n\t}\n}",
+				"onUpdate": "function (data)\n{\n\tif(this.getSprite().isOnScreen() === false)\n\twade.removeSceneObject(this)\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 30,
+					"autoResize": false,
+					"visible": true,
+					"image": "Backgroud.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": true,
+					"name": "",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 1831.4357263995462,
+						"y": 1035.0941058733313
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Background",
+			"path": "",
+			"addToScene": true,
+			"properties": {}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 1000000,
+				"y": 1000000
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": true,
+					"image": "PinkCandy.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": false,
+					"name": "Enemy",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 70,
+						"y": 70
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Enemy",
+			"isTemplate": true,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {},
+			"functions": {
+				"onUpdate": "function (data)\n{\n\tif (this.getPosition().y >= 550)\n\tthis.moveTo(this.getPosition().x, -600,\n\tMath.floor(Math.random() * 20) + 150)\n\tif (this.getPosition().y <= -550)\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n}",
+				"onOverlap": "function (data)\n{\n\tif(data.otherObject == wade.getObjectByName(\"Player\"))\n\t{\n\twade.preloadAudio('data/Death.wav', true);\n\twade.removeSceneObject(data.otherObject)\n\twade.getObjectByName(\"Score\").over = true;\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tvar stupidname = wade.getObjectByName(\"Score\").time;\n\twade.getObjectByName(\"Score\").schedule(0,\"addScore\");\n\tif (highstupidname < stupidname)\n\t{\n\twade.storeLocalObject(\"lastscore\", stupidname);\n\t}\n\t}\n}",
+				"onAddToScene": "function (data)\n{\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n\twade.getObjectByName(\"EnemySpawn\").enemyNumber += 1\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 1000000,
+				"y": 1000000
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": true,
+					"image": "Candies.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": false,
+					"name": "Enemy",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 75,
+						"y": 75
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Enemy_Green",
+			"isTemplate": true,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Enemy"
+			},
+			"functions": {
+				"onUpdate": "function (data)\n{\n\tif (this.getPosition().y >= 550)\n\tthis.moveTo(this.getPosition().x, -600,\n\tMath.floor(Math.random() * 20) + 150)\n\tif (this.getPosition().y <= -550)\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n}",
+				"onOverlap": "function (data)\n{\n\tif(data.otherObject == wade.getObjectByName(\"Player\"))\n\t{\n\twade.preloadAudio('data/Death.wav', true);\n\twade.removeSceneObject(data.otherObject)\n\twade.getObjectByName(\"Score\").over = true;\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tvar stupidname = wade.getObjectByName(\"Score\").time;\n\twade.getObjectByName(\"Score\").schedule(0,\"addScore\");\n\tif (highstupidname < stupidname)\n\t{\n\twade.storeLocalObject(\"lastscore\", stupidname);\n\t}\n\t}\n}",
+				"onAddToScene": "function (data)\n{\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n\twade.getObjectByName(\"EnemySpawn\").enemyNumber += 1;\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 1000000,
+				"y": 1000000
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": true,
+					"image": "CandyCorn.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": false,
+					"name": "Enemy",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 72,
+						"y": 72
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Enemy_Corn",
+			"isTemplate": true,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Enemy"
+			},
+			"functions": {
+				"onUpdate": "function (data)\n{\n\tif (this.getPosition().y >= 550)\n\tthis.moveTo(this.getPosition().x, -600,\n\tMath.floor(Math.random() * 20) + 150)\n\tif (this.getPosition().y <= -550)\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n}",
+				"onOverlap": "function (data)\n{\n\tif(data.otherObject == wade.getObjectByName(\"Player\"))\n\t{\n\twade.preloadAudio('data/Death.wav', true);\n\twade.removeSceneObject(data.otherObject)\n\twade.getObjectByName(\"Score\").over = true;\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tvar stupidname = wade.getObjectByName(\"Score\").time;\n\twade.getObjectByName(\"Score\").schedule(0,\"addScore\");\n\tif (highstupidname < stupidname)\n\t{\n\twade.storeLocalObject(\"lastscore\", stupidname);\n\t}\n\t}\n}",
+				"onAddToScene": "function (data)\n{\n\tthis.moveTo(this.getPosition().x, 600,\n\tMath.floor(Math.random() * 20) + 150)\n\twade.getObjectByName(\"EnemySpawn\").enemyNumber += 1;\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [],
+			"spriteOffsets": [],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "EnemySpawn",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\tthis.enemyNumber = 0;\n\tthis.schedule(0,\"Spawn\");\n}",
+				"Spawn": "function (data)\n{\n\tif (this.enemyNumber <= 45){\n\tfor (i = 0; i < Math.floor(Math.random() * 5) + 0; i++){\n\tvar bObj = wade.getObjectByName(\"Enemy\").clone(\n\tMath.floor(Math.random() * 1500) - 750, \n\t-550 -\n\tMath.floor(Math.random() * 300) - 300)\n\twade.addSceneObject(bObj)\n\t}\n\tfor (i = 0; i < Math.floor(Math.random() * 5) + 0; i++){\n\tvar bObj = wade.getObjectByName(\"Enemy_Green\").clone(\n\tMath.floor(Math.random() * 1500) - 750, \n\t-550 -\n\tMath.floor(Math.random() * 300) - 300)\n\twade.addSceneObject(bObj)\n\t}\n\tfor (i = 0; i < Math.floor(Math.random() * 5) + 0; i++){\n\tvar bObj = wade.getObjectByName(\"Enemy_Corn\").clone(\n\tMath.floor(Math.random() * 1500) - 750, \n\t-550 -\n\tMath.floor(Math.random() * 300) - 300)\n\twade.addSceneObject(bObj)\n\t}     \n\t}\n\tthis.schedule(\n\tMath.floor(Math.random() * 2) + 2500,\"Spawn\");\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": -400
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "0",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 15,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Score",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\tthis.time = 0;\n\tthis.over = false;\n\tthis.schedule(1000,\"AddTime\");\n}",
+				"AddTime": "function (data)\n{\n\tthis.time += 1;\n\tthis.schedule(1000,\"AddTime\");\n}",
+				"onUpdate": "function (data)\n{\n\t\n\t// if (this.time >= 10)\n\t// {\n\t// wade.fadeOutLayer(16, 2)\n\t// console.log(\"Hi\");\n\t// }\n}",
+				"addScore": "function (data)\n{\n\tvar totalScore = wade.retrieveLocalObject(\"totalScore\");\n\ttotalScore += this.time;\n\twade.storeLocalObject(\"totalScore\", totalScore);\n}",
+				"onKeyDown": "function (data)\n{\n\tvar controles=\n\t{\n\t    left: \"left\",\n\t    right: \"right\",\n\t};\n\tif (this.over === false)\n\tthis.getSprite().setText(this.time)\n\telse\n\t{\n\tif (wade.isKeyDown(controles.right)&&\n\t(wade.isKeyDown(controles.left)))\n\t{\n\twade.clearScene();\n\twade.loadScene('scene0.wsc', true,\n\tfunction(){},true);\n\t}\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": -700,
+				"y": -400
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "0",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 15,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "HighScore",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tif (highstupidname){\n\tthis.getSprite().setText(highstupidname);\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": -200
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "Use left and right to rotate.",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 16,
+					"maxWidth": 0,
+					"shadowColor": "#e9ff59",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#e8fc65",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "controlsText",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tif (highstupidname){\n\tif (highstupidname < 30)\n\tthis.getSprite().setText\n\t(\"Use left and right to rotate.\");\n\tif (highstupidname > 30)\n\tthis.getSprite().setText(\"\");\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": -100
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "You move forward automatically",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 16,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "controlsText_clone0",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tif (highstupidname){\n\tif (highstupidname < 30)\n\tthis.getSprite().setText\n\t(\"You move forward automatically\")\n\tif (highstupidname > 30)\n\tthis.getSprite().setText(\"\");\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "You grow then shoot when youre biggest",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 16,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "controlsText_clone1",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tif (highstupidname){\n\tif (highstupidname < 30)\n\tthis.getSprite().setText\n\t(\"You grow then shoot when youre biggest\")\n\tif (highstupidname > 30){\n\tthis.getSprite().setText(\"\");\n\t}\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 100
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "Press left+right to stop.",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": true,
+					"layer": 16,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "controlsText_clone3",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tvar highstupidname = \n\twade.retrieveLocalObject(\"lastscore\");\n\tif (highstupidname){\n\tif (highstupidname < 30)\n\tthis.getSprite().setText\n\t(\"Press left+right to stop.\")\n\tif (highstupidname > 30)\n\tthis.getSprite().setText(\"\");\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "Press left+right to go to menu",
+					"name": "",
+					"font": "80px Arial",
+					"alignment": "center",
+					"color": "#ffffff",
+					"visible": false,
+					"layer": 16,
+					"maxWidth": 0,
+					"shadowColor": "#000",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#000",
+					"outlineWidth": 0,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "controlsText_clone2",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Score"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t\n}",
+				"AddTime": "function (data)\n{\n\t\n}",
+				"onUpdate": "function (data)\n{\n\tif (wade.getObjectByName(\"Score\").over){\n\tthis.getSprite().setVisible(true)\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 0,
+				"y": 0
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [],
+			"spriteOffsets": [],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "CoinSpawn",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "EnemySpawn"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\tthis.schedule(0,\"Spawn\");\n}",
+				"Spawn": "function (data)\n{\n\tvar bObj = wade.getObjectByName(\"Coin\").clone(\n\tMath.floor(Math.random() * 1500) - 750, \n\tMath.floor(Math.random() * 1100) - 550)\n\twade.addSceneObject(bObj)\n\tthis.schedule(\n\tMath.floor(Math.random() * 0) + 2000,\"Spawn\");\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": 151.13008617213418,
+				"y": -36.735865222026675
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "TextSprite",
+					"text": "O",
+					"name": "",
+					"font": "20px Arial",
+					"alignment": "center",
+					"color": "#000",
+					"visible": true,
+					"layer": 1,
+					"maxWidth": 0,
+					"shadowColor": "#e6e263",
+					"shadowBlur": 0,
+					"shadowOffset": {
+						"x": 0,
+						"y": 0
+					},
+					"lineSpacing": 1,
+					"maxLines": 0,
+					"firstLine": 0,
+					"outlineColor": "#e6e263",
+					"outlineWidth": 9,
+					"boundsScale": {
+						"x": 1,
+						"y": 1
+					},
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"fixedSize": false,
+					"drawModifiers": [],
+					"properties": {}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "Coin",
+			"isTemplate": true,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {
+				"instanceOf": "Bullet"
+			},
+			"functions": {
+				"onAddToScene": "function (data)\n{\n\t// wade.storeLocalObject(\"coinscore\", 0);\n\t// wade.storeLocalObject(\"enemyscore\", 0);\n\t// wade.storeLocalObject(\"lastscore\", 0);\n\t\n}",
+				"onOverlap": "function (data)\n{\n\tif(data.otherObject == wade.getObjectByName(\"Player\")){\n\twade.getObjectByName(\"Score\").time += 5;\n\twade.removeSceneObject(this)\n\twade.loadAudio('data/Coin.ogg', true);\n\tvar coinscore = wade.retrieveLocalObject(\"coinscore\");\n\tcoinscore += 1;\n\twade.storeLocalObject(\"coinscore\", coinscore);\n\t}\n}"
+			}
+		},
+		{
+			"type": "SceneObject",
+			"position": {
+				"x": -3729.72993398573,
+				"y": -202.82534652566056
+			},
+			"rotation": 0,
+			"behaviors": [],
+			"sprites": [
+				{
+					"type": "Sprite",
+					"animations": {},
+					"currentAnimation": "default",
+					"sortPoint": {
+						"x": 0,
+						"y": 0
+					},
+					"layer": 1,
+					"autoResize": false,
+					"visible": true,
+					"image": "DonutPlayer.png",
+					"imageArea": {
+						"minX": 0,
+						"minY": 0,
+						"maxX": 1,
+						"maxY": 1
+					},
+					"alwaysDraw": false,
+					"name": "",
+					"drawModifiers": [],
+					"pixelShader": "",
+					"pixelShaderUniforms": null,
+					"pixelPerfectMouseEvents": 0,
+					"properties": {},
+					"size": {
+						"x": 875.4605562491831,
+						"y": 922.5789930763727
+					}
+				}
+			],
+			"spriteOffsets": [
+				{
+					"x": 0,
+					"y": 0,
+					"angle": 0
+				}
+			],
+			"flowChart": null,
+			"grid": null,
+			"alignment": {
+				"x": "center",
+				"y": "center"
+			},
+			"name": "SceneObject_0",
+			"isTemplate": false,
+			"path": "",
+			"addToScene": {
+				"autoListen": true,
+				"params": null
+			},
+			"properties": {}
+		}
+	],
+	"paths": [],
+	"sceneObjectGroups": [],
+	"layers": [
+		null,
+		{
+			"scaleFactor": 1,
+			"translateFactor": 1,
+			"renderMode": "webgl",
+			"useQuadtree": true,
+			"resolutionFactor": 1,
+			"blur": 0,
+			"postProcessShader": "",
+			"postProcessShaderUniforms": null,
+			"properties": {}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+			"scaleFactor": 0,
+			"translateFactor": 0,
+			"renderMode": "webgl",
+			"useQuadtree": true,
+			"resolutionFactor": 1,
+			"blur": 0,
+			"postProcessShader": "",
+			"postProcessShaderUniforms": null,
+			"properties": {}
+		},
+		{
+			"scaleFactor": 1,
+			"translateFactor": 1,
+			"renderMode": "webgl",
+			"useQuadtree": true,
+			"resolutionFactor": 1,
+			"blur": 0,
+			"postProcessShader": "",
+			"postProcessShaderUniforms": null,
+			"properties": {}
+		},
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		{
+			"scaleFactor": 1,
+			"translateFactor": 1,
+			"renderMode": "webgl",
+			"useQuadtree": true,
+			"resolutionFactor": 1,
+			"blur": 0,
+			"postProcessShader": "",
+			"postProcessShaderUniforms": null,
+			"properties": {}
+		}
+	],
+	"minScreenSize": {
+		"x": 1000,
+		"y": 1000
+	},
+	"maxScreenSize": {
+		"x": 10000,
+		"y": 10000
+	},
+	"orientation": "none",
+	"windowMode": "full",
+	"defaultLayer": 1,
+	"timeline": {
+		"events": []
+	},
+	"images": [
+		"CookiePlayer.png"
+	],
+	"audio": [
+		"soundEffects/gunShot.ogg",
+		"soundEffects/gunShot.ogg"
+	]
+}
